@@ -5,10 +5,10 @@ using namespace foxintango;
 
 namespace foxintango {
 
-class IOEngineLWS :public ModuleInterface {
+class IOEngineLWSInterface :public ModuleInterface {
 public:
-    IOEngineLWS();
-   ~IOEngineLWS();
+    IOEngineLWSInterface();
+   ~IOEngineLWSInterface();
 public:
     virtual bool  containClass(const unsigned char* name) {
         return false;
@@ -33,5 +33,7 @@ public:
     virtual void* exportVariable(const unsigned char* name) {
         return 0;
     }
-}
+};
+
+extern IOEngineLWSInterface MODULE_INTERFACE_INSTANCE;
 }
