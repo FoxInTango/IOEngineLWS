@@ -134,7 +134,6 @@ clean   :
 install :
 	rm -rf /usr/local/include/IOEngineLWS
 	mkdir  /usr/local/include/IOEngineLWS
-	cp  -rf ./include/* /usr/local/include/IOEngineLWS
 	cp  -rf ./lib/${TARGET_NAME}  /usr/local/lib
 uninstall : 
 	rm -rf /usr/local/include/IOEngineLWS
