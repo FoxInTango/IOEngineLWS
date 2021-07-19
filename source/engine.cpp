@@ -35,5 +35,7 @@ public:
     }
 };
 
-extern "C" IOEngineLWSInterface foxintangoAPI MODULE_INTERFACE_INSTANCE;
+//extern "C" IOEngineLWSInterface foxintangoAPI MODULE_INTERFACE_INSTANCE;
 }
+
+extern "C" IOEngineLWSInterface foxintangoAPI MODULE_INTERFACE_INSTANCE;
