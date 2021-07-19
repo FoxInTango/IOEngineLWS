@@ -1,41 +1,44 @@
-#include <libmodule/libmodule.h>
-#include <libmodel/libmodel.h>
-#include <libcpp/libcpp.h>
+#include "../include/engine.h"
+
 using namespace foxintango;
 
-namespace foxintango {
-
-class IOEngineLWSInterface :public ModuleInterface {
-public:
-    IOEngineLWSInterface();
-   ~IOEngineLWSInterface();
-public:
-    virtual bool  containClass(const unsigned char* name) {
-        return false;
-    }
-
-    virtual void* createObject(const unsigned char* name) {
-        return 0;
-    }
-
-    virtual void* createObject(const unsigned char* name,const Model& model){
-        return 0;
-    }
-
-    virtual bool  containFunction(const unsigned char* name) {
-        return false;
-    }
-
-    virtual void* exportFunction(const unsigned char* name) {
-        return 0;
-    }
-
-    virtual void* exportVariable(const unsigned char* name) {
-        return 0;
-    }
-};
-
-//extern "C" IOEngineLWSInterface foxintangoAPI MODULE_INTERFACE_INSTANCE;
+IOEngineLWSInterface::IOEngineLWSInterface(){
 }
 
-extern "C" IOEngineLWSInterface foxintangoAPI MODULE_INTERFACE_INSTANCE;
+IOEngineLWSInterface::~IOEngineLWSInterface(){
+}
+
+bool IOEngineLWSInterface::containClass(const unsigned char* name) {
+    return false;
+}
+
+void* IOEngineLWSInterface::createObject(const unsigned char* name) {
+    return 0;
+}
+
+void* IOEngineLWSInterface::createObject(const unsigned char* name,const Model& model){
+    return 0;
+}
+
+bool IOEngineLWSInterface::containFunction(const unsigned char* name) {
+    return false;
+}
+
+void* IOEngineLWSInterface::exportFunction(const unsigned char* name) {
+    return 0;
+}
+
+void* IOEngineLWSInterface::exportVariable(const unsigned char* name) {
+    return 0;
+}
+
+//EXTERN_C_BEGIN
+
+IOEngineLWSInterface foxintangoAPI MODULE_INTERFACE_INSTANCE;
+
+//extern "C" IOEngineLWSInterface foxintangoAPI MODULE_INTERFACE_INSTANCE;
+
+/**
+extern "C" int foxintangoAPI MODULE_INTERFACE_INSTANCE() {
+    return 0;
+}*/
