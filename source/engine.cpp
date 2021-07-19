@@ -32,13 +32,5 @@ void* IOEngineLWSInterface::exportVariable(const unsigned char* name) {
     return 0;
 }
 
-//EXTERN_C_BEGIN
-
 IOEngineLWSInterface foxintangoAPI MODULE_INTERFACE_INSTANCE;
 
-//extern "C" IOEngineLWSInterface foxintangoAPI MODULE_INTERFACE_INSTANCE;
-
-/**
-extern "C" int foxintangoAPI MODULE_INTERFACE_INSTANCE() {
-    return 0;
-}*/
