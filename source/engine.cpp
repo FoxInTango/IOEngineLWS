@@ -1,4 +1,10 @@
 #include "../include/engine.h"
+
+#include "../include/EndpointUDP.h"
+#include "../include/EndpointTCP.h"
+#include "../include/EndpointWS.h"
+#include "../include/EndpointHTTP.h"
+
 using namespace foxintango;
 
 #include <libwebsockets.h>
@@ -31,5 +37,29 @@ EngineLWS::~EngineLWS() {
 }
 
 IOEndpoint* EngineLWS::createEendpoint(const Model& model){
+    ME* t = model.subelementAt("type");
+    if(t) {
+        const char* ts = *t;
+        IOEndpointType et;
+        if(0 == strcmp("IOET_UDP"              ,ts))  { et = IOET_UDP;        }
+        else if(0 == strcmp("IOET_TCP_SERVER"  ,ts))  { et = IOET_TCP_SERVER; }
+        else if(0 == strcmp("IOET_TCP_CLIENT"  ,ts))  { et = IOET_TCP_CLIENT; }
+        else if(0 == strcmp("IOET_HTTP_SERVER" ,ts))  { et = IOET_HTTP_SERVER;}
+        else if(0 == strcmp("IOET_HTTP_CLINE"  ,ts))  { et = IOET_HTTP_CLIENT;}
+        else if(0 == strcmp("IOET_WS_SERVER"   ,ts))  { et = IOET_WS_SERVER;  }
+        else if(0 == strcmp("IOET_WS_CLINE"    ,ts))  { et = IOET_WS_CLIENT;  }
 
+        switch(et) {
+            case IOEndpointType::IOET_UDP:{}break;
+            case IOET_TCP_SERVER:{}break;
+            case IOET_TCP_CLIENT:{}break;
+            case IOET_HTTP_SERVER:{}break;
+            case IOET_HTTP_CLIENT:{}break;
+            case IOET_WS_SERVER:{}break;
+            case IOET_WS_CLIENT:{}break;
+            default:return 0;
+        }
+    }
+
+    return 0;
 }
