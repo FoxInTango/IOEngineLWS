@@ -10,15 +10,15 @@ public:
     IOEngineLWSInterface();
     virtual ~IOEngineLWSInterface();
 public:
-    virtual bool  containClass(const unsigned char* name);
-    virtual void* createObject(const unsigned char* name);
+    virtual bool  containClass(const char* name);
+    virtual void* createObject(const char* name);
 
-    virtual void* createObject(const unsigned char* name,const Model& model);
+    virtual void* createObject(const char* name,const Model& model);
 
-    virtual bool  containFunction(const unsigned char* name);
+    virtual bool  containFunction(const char* name);
 
-    virtual void* exportFunction(const unsigned char* name);
-    virtual void* exportVariable(const unsigned char* name);
+    virtual void* exportFunction(const char* name);
+    virtual void* exportVariable(const char* name);
 };
 }
 EXTERN_C_END

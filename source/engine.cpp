@@ -29,3 +29,7 @@ EngineLWS::EngineLWS() {
 EngineLWS::~EngineLWS() {
 
 }
+
+IOEndpoint* EngineLWS::createEendpoint(const Model& model){
+
+}
