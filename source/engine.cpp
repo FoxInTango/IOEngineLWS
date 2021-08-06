@@ -4,8 +4,8 @@
 #include "../include/EndpointTCP.h"
 #include "../include/EndpointWS.h"
 #include "../include/EndpointHTTP.h"
-
 using namespace foxintango;
+#include <iostream>
 
 #include <libwebsockets.h>
 static const struct lws_http_mount mount = {
@@ -36,10 +36,13 @@ EngineLWS::~EngineLWS() {
 
 }
 
-IOEndpoint* EngineLWS::createEendpoint(const Model& model){
+IOEndpoint* EngineLWS::createEndpoint(const Model& model){
     ME* t = model.subelementAt("type");
     if(t) {
-        const char* ts = *t;
+        char* ts;
+        ts << *t;
+        std::cout << "EngineLWS : createEndpoint - " << ts << std::endl;
+
         IOEndpointType et;
         if(0 == strcmp("IOET_UDP"              ,ts))  { et = IOET_UDP;        }
         else if(0 == strcmp("IOET_TCP_SERVER"  ,ts))  { et = IOET_TCP_SERVER; }

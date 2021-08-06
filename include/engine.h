@@ -9,7 +9,7 @@ public:
     EngineLWS();
     ~EngineLWS();
 public:
-    virtual IOEndpoint* createEendpoint(const Model& model);
+    virtual IOEndpoint* createEndpoint(const Model& model);
 };
 namespaceEnd
 EXTERN_C_END
