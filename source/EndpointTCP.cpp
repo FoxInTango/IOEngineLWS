@@ -8,10 +8,26 @@ EndpointTCPClient::~EndpointTCPClient() {
 
 }
 
+IOEndpointStatus EndpointTCPClient::boot() {
+
+}
+
+IOEndpointStatus EndpointTCPClient::stop() {
+
+}
+
 EndpointTCPServer::EndpointTCPServer(const Model& m) {
 
 }
 
 EndpointTCPServer::~EndpointTCPServer() {
+
+}
+
+IOEndpointStatus EndpointTCPServer::boot() {
+
+}
+
+IOEndpointStatus EndpointTCPServer::stop() {
 
 }

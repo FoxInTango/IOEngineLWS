@@ -8,6 +8,14 @@ EndpointWSClient::~EndpointWSClient() {
 
 }
 
+IOEndpointStatus EndpointWSClient::boot() {
+
+}
+
+IOEndpointStatus EndpointWSClient::stop() {
+
+}
+
 EndpointWSServer::EndpointWSServer(const Model& m) {
 
 }
@@ -16,3 +24,10 @@ EndpointWSServer::~EndpointWSServer() {
 
 }
 
+IOEndpointStatus EndpointWSServer::boot() {
+
+}
+
+IOEndpointStatus EndpointWSServer::stop() {
+
+}

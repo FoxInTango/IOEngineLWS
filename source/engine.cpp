@@ -40,7 +40,7 @@ IOEndpoint* EngineLWS::createEndpoint(const Model& model){
     ME* t = model.subelementAt("type");
     if(t) {
         char* ts;
-        ts << *t;
+        &ts << *t;
         std::cout << "EngineLWS : createEndpoint - " << ts << std::endl;
 
         IOEndpointType et;
@@ -53,13 +53,13 @@ IOEndpoint* EngineLWS::createEndpoint(const Model& model){
         else if(0 == strcmp("IOET_WS_CLINE"    ,ts))  { et = IOET_WS_CLIENT;  }
 
         switch(et) {
-            case IOEndpointType::IOET_UDP:{}break;
-            case IOET_TCP_SERVER:{}break;
-            case IOET_TCP_CLIENT:{}break;
-            case IOET_HTTP_SERVER:{}break;
-            case IOET_HTTP_CLIENT:{}break;
-            case IOET_WS_SERVER:{}break;
-            case IOET_WS_CLIENT:{}break;
+            case IOET_UDP:         { return new EndpointUDP(model);        }break;
+            case IOET_TCP_SERVER:  { return new EndpointTCPServer(model);  }break;
+            case IOET_TCP_CLIENT:  { return new EndpointTCPClient(model);  }break;
+            case IOET_HTTP_SERVER: { return new EndpointHTTPServer(model); }break;
+            case IOET_HTTP_CLIENT: { return new EndpointHTTPClient(model); }break;
+            case IOET_WS_SERVER:   { return new EndpointWSServer(model);   }break;
+            case IOET_WS_CLIENT:   { return new EndpointWSClient(model);   }break;
             default:return 0;
         }
     }
