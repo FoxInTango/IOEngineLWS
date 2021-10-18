@@ -1,6 +1,12 @@
 #include "../include/EndpointUDP.h"
 #include <libwebsockets.h>
 
+/** TEST BEGIN
+ * */
+
+/** TEST END
+ * */
+
 class EndpointUDPIMPL {
 public:
     static uint8_t sendbuf[4096];
