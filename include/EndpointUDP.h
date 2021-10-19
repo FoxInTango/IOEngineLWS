@@ -5,11 +5,6 @@
 using namespace foxintango;
 
 EXTERN_C_BEGIN
-struct endpoint_udp_model_t {
-    char* name;
-    int   port;
-    int   buffer_size;
-};
 
 class EndpointUDPIMPL;
 class foxintangoAPI EndpointUDP :public IOEndpoint {
