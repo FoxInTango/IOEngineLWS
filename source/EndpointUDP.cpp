@@ -1,6 +1,7 @@
 #include "../include/EndpointUDP.h"
 #include <libwebsockets.h>
-
+#include <thread>
+#include <chrono>
 /** TEST BEGIN
  * */
 const int TEST_PORT_A = 8801;
@@ -23,6 +24,7 @@ public:
 };
 
 extern "C" int callback_raw_udp(struct lws *wsi,enum lws_callback_reasons reason,void *user,void *in,size_t len);
+extern "C" int thread_process(EndpointUDPIMPL*);
 void sigint_handler(int sig)
 {
     
@@ -68,9 +70,8 @@ EndpointUDP::~EndpointUDP() {
 }
 
 IOEndpointStatus EndpointUDP::boot() {
-    int n = 0;
-    while (n >= 0 && !this->impl->interrupted)
-		n = lws_service(this->impl->lwsContext, 0);
+    std::thread thread(thread_process,this->impl);
+    thread.detach();
 }
 
 IOEndpointStatus EndpointUDP::stop() {
@@ -167,4 +168,14 @@ int callback_raw_udp(struct lws *wsi,enum lws_callback_reasons reason,void *user
 	}
 
 	return 0;
+}
+
+int thread_process(EndpointUDPIMPL* e) {
+    if(!e) return -1;
+
+    int n = 0;
+    while (n >= 0 && !e->interrupted)
+        n = lws_service(e->lwsContext,0);
+
+    return 0;
 }
