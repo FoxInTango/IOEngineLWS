@@ -9,8 +9,8 @@
 
 class EndpointUDPIMPL {
 public:
-    static uint8_t sendbuf[4096];
-    static size_t  sendlen;
+    uint8_t sendbuf[4096];
+    size_t  sendlen;
     struct lws_udp lwsUDP;
     struct lws_context_creation_info lwsInfo;
     struct lws_context* lwsContext;
