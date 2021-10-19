@@ -3,40 +3,78 @@
 
 /** TEST BEGIN
  * */
-
+const int TEST_PORT_A = 8801;
+const int TEST_PORT_B = 8802;
+const char* TEST_NAME_A = "name.A";
+const char* TEST_NAME_B = "name.B";
 /** TEST END
  * */
 
 class EndpointUDPIMPL {
 public:
+    bool interrupted = false;
     uint8_t sendbuf[4096];
     size_t  sendlen;
     struct lws_udp lwsUDP;
     struct lws_context_creation_info lwsInfo;
     struct lws_context* lwsContext;
+    struct lws_vhost* lwsVhost;
 public:
 };
 
 extern "C" int callback_raw_udp(struct lws *wsi,enum lws_callback_reasons reason,void *user,void *in,size_t len);
+void sigint_handler(int sig)
+{
+    
+	//interrupted = 1;
+}
 
 EndpointUDP::EndpointUDP(const Model& m) {
     this->impl = new EndpointUDPIMPL();
 
     if(this->impl) {
-        
+        //signal(SIGINT,sigint_handler);
+        memset(&this->impl->lwsInfo,0,sizeof(this->impl->lwsInfo)); /* otherwise uninitialized garbage */
+	    this->impl->lwsInfo.options = LWS_SERVER_OPTION_EXPLICIT_VHOSTS;
+        this->impl->lwsContext = lws_create_context(&this->impl->lwsInfo);
+	    if(!this->impl->lwsContext) {
+	        lwsl_err("EndpointUDP::EndpointUDP() LWSContext create failed.\n");
+	        //return 1;
+            return;
+	    }
+        const ME* ne = m["name"];
+        char* name = 0;
+        if(ne) {
+            //*ne >> name;
+            ne->as(&name);
+        }
+        this->impl->lwsInfo.port = CONTEXT_PORT_NO_LISTEN_SERVER;
+	    struct lws_protocols protocols[] = { { name,callback_raw_udp,sizeof(void*),0,0,this->impl,0 },
+	                                         LWS_PROTOCOL_LIST_TERM
+                                           };
+        this->impl->lwsInfo.protocols = protocols;
+        this->impl->lwsVhost = lws_create_vhost(this->impl->lwsContext,&this->impl->lwsInfo);
+        if(!this->impl->lwsVhost) {
+	        lwsl_err("EndpointUDP::EndpointUDP() LWSVhost create failed.\n");
+            lws_context_destroy(this->impl->lwsContext);
+            return;
+	    }
     }
 }
 
 EndpointUDP::~EndpointUDP() {
+    this->stop();
     if(this->impl) delete this->impl;
 }
 
 IOEndpointStatus EndpointUDP::boot() {
-
+    int n = 0;
+    while (n >= 0 && !this->impl->interrupted)
+		n = lws_service(this->impl->lwsContext, 0);
 }
 
 IOEndpointStatus EndpointUDP::stop() {
-
+    this->impl->interrupted = true;
 }
 
 int callback_raw_udp(struct lws *wsi,enum lws_callback_reasons reason,void *user,void *in,size_t len)
