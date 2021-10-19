@@ -17,7 +17,7 @@ public:
 public:
 };
 
-int callback_raw_udp(struct lws *wsi,enum lws_callback_reasons reason,void *user,void *in,size_t len);
+extern "C" int callback_raw_udp(struct lws *wsi,enum lws_callback_reasons reason,void *user,void *in,size_t len);
 
 EndpointUDP::EndpointUDP(const Model& m) {
     this->impl = new EndpointUDPIMPL();
