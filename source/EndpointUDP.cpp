@@ -2,6 +2,7 @@
 #include <libwebsockets.h>
 #include <thread>
 #include <chrono>
+#include <iostream>
 /** TEST BEGIN
  * */
 const int TEST_PORT_A = 8801;
@@ -50,7 +51,7 @@ EndpointUDP::EndpointUDP(const Model& m) {
             //*ne >> name;
             ne->as(&name);
         }
-        this->impl->lwsInfo.port = CONTEXT_PORT_NO_LISTEN_SERVER;
+        this->impl->lwsInfo.port = 8080;//CONTEXT_PORT_NO_LISTEN_SERVER;
 	    struct lws_protocols protocols[] = { { name,callback_raw_udp,sizeof(void*),0,0,this->impl,0 },
 	                                         LWS_PROTOCOL_LIST_TERM
                                            };
@@ -111,6 +112,7 @@ int callback_raw_udp(struct lws *wsi,enum lws_callback_reasons reason,void *user
 		if (endpointIMPL->sendlen > sizeof(endpointIMPL->sendbuf))
 			endpointIMPL->sendlen = sizeof(endpointIMPL->sendbuf);
 		memcpy(endpointIMPL->sendbuf,in, endpointIMPL->sendlen);
+        std::cout << "IOEngineLWS : message from " << sa46_sockaddr(&endpointIMPL->lwsUDP.sa46) << "-" << endpointIMPL->sendbuf << std::endl;
 		/*
 		 * ... and we send it next time around the event loop.  This
 		 * can be extended to having a ringbuffer of different send
