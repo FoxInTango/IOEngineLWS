@@ -176,8 +176,10 @@ int thread_process(EndpointUDPIMPL* e) {
     if(!e) return -1;
 
     int n = 0;
-    while (n >= 0 && !e->interrupted)
+    while (n >= 0 && !e->interrupted) {
+        lwsl_notice("thread process loop .\n");
         n = lws_service(e->lwsContext,0);
+    }
 
     return 0;
 }
